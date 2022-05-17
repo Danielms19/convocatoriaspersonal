@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>403 Forbidden</title>
+</head>
+<body>
+
+<p>Directory access is forbidden.</p>
+
+</body>
+</html>
+
+
+<?php
+defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
+class inicio extends CI_Controller {
+	public function __construct() {
+		parent::__construct ();
+		
+		$this->load->library ( 'session' );
+		$this->load->library ( 'encrypt' );
+		$this->load->database ();
+	}
+	public function index() {
+		$user = $this->Usuario_model->datos ();
+		if (empty ( $user )) {
+			
+			// loading captcha helper
+			$this->load->helper ( 'captcha' );
+			
+			$data ['resp'] = false;
+			
+			
+			$this->form_validation->set_rules ( 'User', 'Usuario', 'trim|required|xss_clean' );
+			$this->form_validation->set_rules ( 'Password', 'Contraseña', 'trim|required|xss_clean' );
+			//$this->form_validation->set_rules ( 'userCaptcha', 'Captcha', 'required|callback_check_captcha' );
+			
+			$userCaptcha = $this->input->post ( 'userCaptcha' );
+			
+			
+			if ($this->form_validation->run () == FALSE) {
+				$this->load->view ( 'inicio_view', $data );
+			} else {
+				$usuario = $this->input->post ( 'User' );
+				$password = $this->input->post ( 'Password' );
+				
+				$this->db->reconnect ();
+				$resp = $this->Usuario_model->obtenerPassword ( $usuario );
+				
+				if ( !empty($resp) && ($this->encrypt->decode ( $resp [0] ['Password'] ) == $password)) {
+					
+					$array = array (
+							'user' => $resp [0] ['usuario'],
+							'nombres' => $resp [0] ['nombres'],
+							'vista' => 0 
+					);
+					$this->db->reconnect ();
+					$this->session->set_userdata ( $array );
+					redirect ( 'adjudicacion', 'refresh' );
+				} else {
+					
+					
+					$data ['captcha'] = $this->crear_captcha();
+					
+					$data ['resp'] = true;
+					$this->load->view ( 'inicio_view', $data );
+				}
+			}
+		} else {
+			redirect ( 'adjudicacion', 'refresh' );
+		}
+	}
+	
+	function crear_captcha(){
+		
+		$random_number = substr ( number_format ( time () * rand (), 0, '', '' ), 0, 4 );
+		// setting up captcha config
+		$vals = array (
+				'word' => $random_number,
+				'img_path' => './captcha/',
+				'img_url' => base_url () . 'captcha/',
+				'img_width' => 80,
+				'img_height' => 40,
+				'font_size' => 28,
+				'font_path' => FCPATH . 'captcha/font/verdana.ttf',
+				'expiration' => 10
+		);
+		
+		$this->session->set_userdata ( 'captchaWord', $random_number );
+		
+		return create_captcha ( $vals );
+		
+	}
+	
+	public function salir() {
+		$this->session->sess_destroy ();
+		
+		redirect ( 'Inicio', 'refresh' );
+	}
+	public function vista() {
+		$this->Usuario_model->cambio_vista ();
+		echo json_encode ( 1 );
+	}
+}

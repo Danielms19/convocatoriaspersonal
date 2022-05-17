@@ -1,0 +1,108 @@
+################################################################################
+# This .tfignore file was automatically created by Microsoft(R) Visual Studio.
+#
+# Local items matching filespecs in this file will not be added to version
+# control. This file can be checked in to share exclusions with others.
+#
+# Wildcard characters are * and ?. Patterns are matched recursively unless the
+# pattern is prefixed by the \ character.
+#
+# You can prepend a path to a pattern to make it more specific. If you do,
+# wildcard characters are not permitted in the path portion.
+#
+# The # character at the beginning of a line indicates a comment.
+#
+# The ! prefix negates a pattern. This can be used to re-include an item after
+# it was excluded by a .tfignore file higher in the tree, or by the Team
+# Project Collection's global exclusions list.
+#
+# The / character is interpreted as a \ character on Windows platforms.
+#
+# Examples:
+#
+#  # Excludes all files ending in .txt in Alpha\Beta and all its subfolders.
+#  Alpha\Beta\*.txt
+#
+#  # Excludes all files ending in .cpp in this folder only.
+#  \*.cpp
+#
+#  # Excludes all files ending in .cpp in this folder and all subfolders.
+#  *.cpp
+#
+#  # If "Contoso" is a folder, then Contoso and all its children are excluded.
+#  # If it is a file, then only the "Contoso" in this folder is excluded.
+#  \Contoso
+#
+#  # If Help.exe is excluded by a higher .tfignore file or by the Team Project
+#  # Collection global exclusions list, then this pattern re-includes it in
+#  # this folder only.
+#  !\Help.exe    
+#
+################################################################################
+
+\archivos\1
+\archivos\10
+\archivos\11
+\archivos\12
+\archivos\13
+\archivos\14
+\archivos\15
+\archivos\16
+\archivos\17
+\archivos\18
+\archivos\2
+\archivos\20
+\archivos\21
+\archivos\22
+\archivos\23
+\archivos\24
+\archivos\25
+\archivos\27
+\archivos\28
+\archivos\29
+\archivos\3
+\archivos\30
+\archivos\31
+\archivos\32
+\archivos\33
+\archivos\34
+\archivos\35
+\archivos\36
+\archivos\37
+\archivos\38
+\archivos\39
+\archivos\4
+\archivos\40
+\archivos\41
+\archivos\42
+\archivos\43
+\archivos\44
+\archivos\45
+\archivos\46
+\archivos\47
+\archivos\48
+\archivos\49
+\archivos\5
+\archivos\50
+\archivos\51
+\archivos\52
+\archivos\53
+\archivos\54
+\archivos\55
+\archivos\56
+\archivos\57
+\archivos\58
+\archivos\59
+\archivos\6
+\archivos\60
+\archivos\61
+\archivos\62
+\archivos\63
+\archivos\64
+\archivos\65
+\archivos\66
+\archivos\67
+\archivos\7
+\archivos\8
+\archivos\9
+\archivos
