@@ -185,5 +185,54 @@ class inicio extends CI_Controller {
 	}
 	/** FINAL - ACTUALIZAR EL PASSWORD DEL USUARIO **/
 	
-	
+	/** EXTERNAL SIGNUP**/
+	function signup() {
+		try {
+
+			$username = $_POST['username'];
+			$password = $_POST['password'];
+			$email    = $_POST['email'];
+			$name     = $_POST['name'];
+			$lastname = $_POST['lastname'];
+			
+			$user = $this->Usuario_model->datos();
+
+			if (!empty( $user )) {
+				if ($user == $username) {
+					redirect ( 'convocatoria', 'refresh' );
+				} else {
+					$this->session->sess_destroy();
+				}
+			}
+
+			if (!$username) {
+				redirect ( 'Inicio', 'refresh' );
+			}
+			
+			$sql = "SELECT * FROM usuario WHERE usuario = ?";
+			$user = $this->db->query($sql, compact('username'))->row();
+			if (!$user) {
+				$this->db->insert('usuario', [
+					'usuario'   => $username,
+					'password'  => $this->encrypt->encode($password),
+					'nombres'	=> $name .' '. $lastname,
+					'estado' 	=> 1
+				]);
+				$user = $this->db->query($sql, compact('username'))->row();
+			}
+
+			$array = array (
+					'user' 		=> $user->usuario,
+					'nombres' 	=> $user->nombres,
+					'vista' 	=> 0 
+			);
+			$this->session->set_userdata ( $array );
+					
+			redirect ( 'convocatoria', 'refresh' );
+			
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+			redirect ( 'Inicio', 'refresh' );
+		}
+	}
 }
